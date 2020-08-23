@@ -19,8 +19,8 @@ class Player(Base):
     matchups = Column(Binary)
 
 
-class Map(Base):
-    __tablename__ = 'map'
+class BWMap(Base):
+    __tablename__ = 'bwmap'
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
@@ -31,7 +31,8 @@ class Game(Base):
 
     id = Column(Integer, primary_key=True)
     date = Column(Date)
-    map = Column(Integer, ForeignKey('map.id'))
+    bwmap_id = Column(Integer, ForeignKey('bwmap.id'))
+    bwmap = relationship('BWMap', foreign_keys=[bwmap_id])
     winner_id = Column(Integer, ForeignKey('player.id'))
     winner = relationship('Player', foreign_keys=[winner_id])
     loser_id = Column(Integer, ForeignKey('player.id'))
@@ -54,4 +55,3 @@ def session_manager():
 
 
 Base.metadata.create_all(engine)
-
