@@ -15,7 +15,7 @@ class Player(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    race = Column(Integer)
+    main_race = Column(Integer)
     matchups = Column(Binary)
 
 
@@ -26,13 +26,26 @@ class BWMap(Base):
     name = Column(String, nullable=False)
 
 
+class Tournament(Base):
+    __tablename__ = 'tournament'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    start_date = Column(Date)
+    end_date = Column(Date)
+
+
 class Game(Base):
     __tablename__ = 'game'
 
     id = Column(Integer, primary_key=True)
     date = Column(Date)
+    # Map and tournament
     bwmap_id = Column(Integer, ForeignKey('bwmap.id'))
     bwmap = relationship('BWMap', foreign_keys=[bwmap_id])
+    tournament_id = Column(Integer, ForeignKey('tournament.id'))
+    tournament = relationship('Tournament', foreign_keys=[tournament_id])
+    # Players' info
     winner_id = Column(Integer, ForeignKey('player.id'))
     winner = relationship('Player', foreign_keys=[winner_id])
     loser_id = Column(Integer, ForeignKey('player.id'))
