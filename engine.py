@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from contextlib import contextmanager
 
 
-engine = create_engine('sqlite:///stats.db', echo=True)
+engine = create_engine('sqlite:///master_stats.db', echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
